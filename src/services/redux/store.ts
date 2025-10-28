@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./slices/authSlice";
+import authReducer from "../redux/slice/authSlice";
 
 export const store = configureStore({
   reducer: {
@@ -7,6 +7,5 @@ export const store = configureStore({
   },
 });
 
-// ✅ Export types for usage in hooks.ts
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

@@ -1,46 +1,82 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { signupAPI } from "@/services/redux/thunk/authThunk";
 
-const SignUp: React.FC = () => {
+export default function SignupPage() {
+  const router = useRouter();
+  const [form, setForm] = useState({ first_name: "", last_name: "", email: "", password: "" });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+    try {
+      await signupAPI(form.first_name, form.last_name, form.email, form.password);
+      router.push("/login");
+    } catch (err: any) {
+      setError(err.response?.data?.message || "Signup failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <form className="space-y-4">
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Full Name
-        </label>
+    <div className="flex items-center justify-center h-screen bg-gray-900 text-white">
+      <form onSubmit={handleSignup} className="w-96 bg-gray-800 p-6 rounded-lg shadow-md">
+        <h1 className="text-2xl mb-4 font-semibold text-center">Create Account</h1>
+
         <input
           type="text"
-          placeholder="Enter your name"
-          className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+          placeholder="First Name"
+          className="w-full p-2 mb-3 rounded bg-gray-700 text-white"
+          value={form.first_name}
+          onChange={(e) => setForm({ ...form, first_name: e.target.value })}
         />
-      </div>
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Email
-        </label>
+
+        <input
+          type="text"
+          placeholder="Last Name"
+          className="w-full p-2 mb-3 rounded bg-gray-700 text-white"
+          value={form.last_name}
+          onChange={(e) => setForm({ ...form, last_name: e.target.value })}
+        />
+
         <input
           type="email"
-          placeholder="Enter your email"
-          className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+          placeholder="Email"
+          className="w-full p-2 mb-3 rounded bg-gray-700 text-white"
+          value={form.email}
+          onChange={(e) => setForm({ ...form, email: e.target.value })}
         />
-      </div>
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Password
-        </label>
+
         <input
           type="password"
-          placeholder="Create a password"
-          className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+          placeholder="Password"
+          className="w-full p-2 mb-3 rounded bg-gray-700 text-white"
+          value={form.password}
+          onChange={(e) => setForm({ ...form, password: e.target.value })}
         />
-      </div>
-      <button
-        type="submit"
-        className="w-full py-2 mt-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
-      >
-        Sign Up
-      </button>
-    </form>
-  );
-};
 
-export default SignUp;
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full bg-green-600 hover:bg-green-700 py-2 rounded"
+        >
+          {loading ? "Creating..." : "Sign Up"}
+        </button>
+
+        {error && <p className="text-red-400 text-sm mt-3">{error}</p>}
+
+        <p className="text-sm mt-4 text-center">
+          Already have an account?{" "}
+          <button onClick={() => router.push("/login")} className="text-blue-400 underline">
+            Login
+          </button>
+        </p>
+      </form>
+    </div>
+  );
+}
