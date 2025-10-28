@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import LoginForm from "../Auth/LoginForm";
-import SignupForm from "../Auth/SignupForm";
+import Login from "../loginForm/Login";
+import SignUp from "../loginForm/SignUp";
+
 
 interface AuthModalProps {
   onClose: () => void;
@@ -28,7 +29,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ onClose }) => {
         </h2>
 
         {/* Switch Between Forms */}
-        {isLogin ? <LoginForm /> : <SignupForm />}
+        {isLogin ? <Login /> : <SignUp />}
 
         {/* Toggle Link */}
         <p className="mt-4 text-sm text-center text-gray-600">

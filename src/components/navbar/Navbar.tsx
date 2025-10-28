@@ -1,16 +1,15 @@
 "use client";
 
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
 import { User } from "lucide-react";
-import AuthModal from "./AuthModal";
+import AuthModal from "../modal/AuthModal";
+import Link from "next/link";
 
 const Navbar: React.FC = () => {
-  const location = useLocation();
   const [showModal, setShowModal] = useState(false);
 
   const navItems = [
-    { path: "/", label: "Dashboard" },
+    { path: "/dashboard", label: "Dashboard" },
     { path: "/candidates", label: "Candidates" },
     { path: "/scheduler", label: "Scheduling" },
     { path: "/assessments", label: "Assessments" },
@@ -23,16 +22,16 @@ const Navbar: React.FC = () => {
         <div className="flex items-center justify-between px-6 py-3">
           {/* Logo */}
           <div className="flex items-center">
-            <div className="text-xl font-bold text-blue-600">
+            <Link href="/" className="text-xl font-bold text-blue-600">
               TalentFlow AI
-            </div>
+            </Link>
 
             {/* Navigation */}
             <nav className="ml-10 hidden md:flex space-x-8">
               {navItems.map((item) => (
                 <Link
                   key={item.path}
-                  to={item.path}
+                  href={item.path}
                   className={`transition-colors duration-200 ${
                     location.pathname === item.path
                       ? "text-blue-600 font-semibold"
