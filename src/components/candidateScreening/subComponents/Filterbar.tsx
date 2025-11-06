@@ -1,6 +1,6 @@
 import React from "react";
 import { Search } from "lucide-react";
-import type { Job } from "../CandidateScreeningInterface";
+import { Job } from "@/services/interfaces/AssementInterface";
 
 interface FilterBarProps {
   jobs: Job[];

@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Login from "../loginForm/Login";
 import SignUp from "../loginForm/SignUp";
+import Button from "../button/Button";
 
 
 interface AuthModalProps {
@@ -23,38 +24,8 @@ const AuthModal: React.FC<AuthModalProps> = ({ onClose }) => {
           ✕
         </button>
 
-        {/* Header */}
-        <h2 className="text-2xl font-bold text-center text-blue-600 mb-4">
-          {isLogin ? "Welcome Back 👋" : "Create an Account"}
-        </h2>
-
-        {/* Switch Between Forms */}
         {isLogin ? <Login /> : <SignUp />}
 
-        {/* Toggle Link */}
-        <p className="mt-4 text-sm text-center text-gray-600">
-          {isLogin ? (
-            <>
-              Don’t have an account?{" "}
-              <button
-                onClick={() => setIsLogin(false)}
-                className="text-blue-600 hover:underline"
-              >
-                Sign up
-              </button>
-            </>
-          ) : (
-            <>
-              Already have an account?{" "}
-              <button
-                onClick={() => setIsLogin(true)}
-                className="text-blue-600 hover:underline"
-              >
-                Login
-              </button>
-            </>
-          )}
-        </p>
       </div>
     </div>
   );
