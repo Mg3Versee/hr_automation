@@ -9,7 +9,7 @@ export default function ForgotPassword() {
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState("");
   const [otp, setOTP] = useState("");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState(""); 
   const [resetToken, setResetToken] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
