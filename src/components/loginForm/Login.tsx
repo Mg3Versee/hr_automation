@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { loginAPI } from "@/services/redux/thunk/authThunk";
 import { useAuth } from "@/services/context/AuthContext";
+import Input from "../input/Input";
+import Button from "../button/Button";
+import Link from "next/link";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -32,47 +35,41 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-900 text-white">
-      <form onSubmit={handleLogin} className="w-96 bg-gray-800 p-6 rounded-lg shadow-md">
+    <div className="flex items-center justify-center mt-40 ">
+      <form onSubmit={handleLogin} className="w-96 p-6 rounded-lg shadow-md">
         <h1 className="text-2xl mb-4 font-semibold text-center">Login</h1>
-
-        <input
+        <Input
           type="email"
+          label="Email"
           placeholder="Email"
-          className="w-full p-2 mb-3 rounded bg-gray-700 text-white"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          className="w-full p-2 mb-3 rounded  text-black"
+          name="email"
         />
-
-        <input
+        <Input
           type="password"
+          label="Password"
           placeholder="Password"
-          className="w-full p-2 mb-3 rounded bg-gray-700 text-white"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          className="w-full p-2 mb-3 rounded  text-black" name="password"  />
 
-        <button
+        <Button
           type="submit"
           disabled={loading}
           className="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded"
-        >
-          {loading ? "Signing in..." : "Login"}
-        </button>
-
-        {error && <p className="text-red-400 text-sm mt-3">{error}</p>}
+          label ="Login"
+          isLoading={loading}
+          />
 
         <p className="text-sm mt-4 text-center">
           Don’t have an account?{" "}
-          <button onClick={() => router.push("/signup")} className="text-blue-400 underline">
+          <Link href="/signup" className="text-blue-400 underline" >
             Sign Up
-          </button>
+          </Link>
         </p>
 
         <p className="text-sm text-center mt-2">
-          <button onClick={() => router.push("/forgot-password")} className="text-gray-400 underline">
+          <Link href="/forget-password" className="text-gray-400 underline">
             Forgot Password?
-          </button>
+          </Link>
         </p>
       </form>
     </div>

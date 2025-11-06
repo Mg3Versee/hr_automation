@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { resetPasswordAPI, sendOTPAPI, verifyOTPAPI } from "@/services/redux/thunk/authThunk";
+import Input from "../input/Input";
+import Button from "../button/Button";
 
 export default function ForgotPassword() {
   const router = useRouter();
@@ -45,57 +47,51 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-900 text-white">
-      <div className="w-96 bg-gray-800 p-6 rounded-lg shadow-md">
+    <div className="flex items-center justify-center mt-40">
+      <div className="w-96 p-6 rounded-lg shadow-md">
         <h1 className="text-2xl mb-4 text-center">Forgot Password</h1>
 
         {step === 1 && (
           <>
-            <input
+            <Input
               type="email"
+              label="Email"
               placeholder="Enter your email"
-              className="w-full p-2 mb-3 bg-gray-700 rounded"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              className="w-full p-2 mb-3 rounded"
+              name="email"
             />
-            <button onClick={handleSendOTP} className="w-full bg-blue-600 py-2 rounded">
-              Send OTP
-            </button>
+            <Button onClick={handleSendOTP} className="w-full bg-blue-600 py-2 rounded" label="Send OTP" />
+           
           </>
         )}
 
         {step === 2 && (
           <>
-            <input
+            <Input
               type="text"
+              label="Otp"
               placeholder="Enter OTP"
               className="w-full p-2 mb-3 bg-gray-700 rounded"
-              value={otp}
-              onChange={(e) => setOTP(e.target.value)}
+              name="otp"
             />
-            <button onClick={handleVerifyOTP} className="w-full bg-green-600 py-2 rounded">
-              Verify OTP
-            </button>
+            <Button onClick={handleVerifyOTP} className="w-full bg-green-600 py-2 rounded" label="Verify OTP" />
+
           </>
         )}
 
         {step === 3 && (
           <>
-            <input
+            <Input
               type="password"
+              label="password"
+              name="password"
               placeholder="New Password"
-              className="w-full p-2 mb-3 bg-gray-700 rounded"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+  
             />
-            <button onClick={handleResetPassword} className="w-full bg-yellow-600 py-2 rounded">
-              Reset Password
-            </button>
+            <Button onClick={handleResetPassword} className="w-full bg-yellow-600 py-2 rounded" label="Reset Password" />
+              
           </>
         )}
-
-        {message && <p className="text-green-400 mt-2">{message}</p>}
-        {error && <p className="text-red-400 mt-2">{error}</p>}
       </div>
     </div>
   );

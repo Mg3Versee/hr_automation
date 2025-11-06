@@ -1,7 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signupAPI } from "@/services/redux/thunk/authThunk";
+import Input from "../input/Input";
+import Button from "../button/Button";
+import Link from "next/link";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -24,57 +28,53 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-900 text-white">
-      <form onSubmit={handleSignup} className="w-96 bg-gray-800 p-6 rounded-lg shadow-md">
+    <div className="flex items-center justify-center mt-40">
+      <form onSubmit={handleSignup} className="w-96  p-6 rounded-lg shadow-md">
         <h1 className="text-2xl mb-4 font-semibold text-center">Create Account</h1>
 
-        <input
+        <Input
           type="text"
+          label="First Name"
           placeholder="First Name"
-          className="w-full p-2 mb-3 rounded bg-gray-700 text-white"
-          value={form.first_name}
-          onChange={(e) => setForm({ ...form, first_name: e.target.value })}
+          className="w-full p-2 mb-3 rounded  text-black"
+          name="first_name"
         />
 
-        <input
+        <Input
           type="text"
+          label="Last Name"
           placeholder="Last Name"
-          className="w-full p-2 mb-3 rounded bg-gray-700 text-white"
-          value={form.last_name}
-          onChange={(e) => setForm({ ...form, last_name: e.target.value })}
+          className="w-full p-2 mb-3 rounded  text-black"
+          name="last_name"
         />
 
-        <input
+        <Input
           type="email"
           placeholder="Email"
-          className="w-full p-2 mb-3 rounded bg-gray-700 text-white"
-          value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
+          className="w-full p-2 mb-3 rounded  text-black"
+          name="email"
         />
 
-        <input
+        <Input
           type="password"
+          label="Password"
           placeholder="Password"
-          className="w-full p-2 mb-3 rounded bg-gray-700 text-white"
-          value={form.password}
-          onChange={(e) => setForm({ ...form, password: e.target.value })}
+          className="w-full p-2 mb-3 rounded  text-black"
+          name="password"
         />
 
-        <button
+        <Button
           type="submit"
           disabled={loading}
           className="w-full bg-green-600 hover:bg-green-700 py-2 rounded"
-        >
-          {loading ? "Creating..." : "Sign Up"}
-        </button>
-
-        {error && <p className="text-red-400 text-sm mt-3">{error}</p>}
-
+          label="Sign Up"
+        />
+         
         <p className="text-sm mt-4 text-center">
           Already have an account?{" "}
-          <button onClick={() => router.push("/login")} className="text-blue-400 underline">
+          <Link href="/login"  className="text-blue-400 underline">
             Login
-          </button>
+          </Link>
         </p>
       </form>
     </div>
