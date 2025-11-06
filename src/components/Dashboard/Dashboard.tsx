@@ -1,18 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// src/components/Dashboard.tsx
 "use client";
 
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-
-// ✅ Use the typed hooks (no direct useDispatch/useSelector here)
 import { useAppDispatch, useAppSelector } from "@/services/redux/hooks";
 
 import { RefreshCw, Users, Target, Clock, Bell, AlertCircle} from "lucide-react";
 
 import StatCard from "./subComponents/StatCard";
 import PipelineRunner from "./subComponents/PipelineRunner";
-import Navbar from "@/components/navbar/Navbar";
 
 import {
   ResponsiveContainer,
@@ -33,22 +29,14 @@ import { dashboardRefreshAll } from "@/services/redux/thunk/dashboardThunk";
 const Dashboard: React.FC = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-
-  // --- Redux state (from dashboardSlice) ---
-  const { jobs, candidates, recruitmentData, loading } = useAppSelector(
-    (state) => state.dashboard
-  );
-
-  // --- Local UI state ---
+  const { jobs, candidates, recruitmentData, loading } = useAppSelector((state) => state.dashboard);  
   const [refreshing, setRefreshing] = useState(false);
   const [selectedPipelineJob, setSelectedPipelineJob] = useState<any | null>(null);
-  const [selectedTimeRange, setSelectedTimeRange] =
-    useState<"week" | "month" | "quarter" | "year">("month");
+  const [selectedTimeRange, setSelectedTimeRange] =useState<"week" | "month" | "quarter" | "year">("month");
   const [notifications, setNotifications] = useState<any[]>([]);
   const [pipelineStatus, setPipelineStatus] = useState<Record<string, any>>({});
   const [lastFetchTime, setLastFetchTime] = useState<Date | null>(null);
 
-  // ---- Fetch everything the dashboard needs ----
   const fetchAll = useCallback(
     async (force = false) => {
       if (force) setRefreshing(true);
@@ -68,7 +56,6 @@ const Dashboard: React.FC = () => {
     return () => clearInterval(id);
   }, [fetchAll, selectedTimeRange]);
 
-  // ---- Derived stats (memoized) ----
   const stats = useMemo(() => {
     const total = candidates.length;
     const shortlisted = candidates.filter((c: { status: string }) => c?.status === "Shortlisted").length;
@@ -110,7 +97,6 @@ const Dashboard: React.FC = () => {
     };
   }, [candidates]);
 
-  // ---- Notifications from state changes ----
   useEffect(() => {
     const outs: any[] = [];
     const pendingAssessments = candidates.filter(
@@ -143,7 +129,6 @@ const Dashboard: React.FC = () => {
     setNotifications(outs);
   }, [candidates]);
 
-  // ---- Charts data ----
   const pipelineStages = useMemo(
     () => [
       { name: "Applied", value: candidates.length, color: "#3B82F6" },
@@ -166,10 +151,8 @@ const Dashboard: React.FC = () => {
     [candidates]
   );
 
-  // ---- Handlers ----
   const handleRefresh = useCallback(() => fetchAll(true), [fetchAll]);
 
-  // First-load placeholder
   if (loading && !lastFetchTime) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -182,12 +165,7 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* ✅ Navbar */}
-      <Navbar />
-
-      <main className="p-6">
-        {/* Header */}
+    <div className="p-6">
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Recruitment Dashboard</h1>
@@ -497,7 +475,6 @@ const Dashboard: React.FC = () => {
             </div>
           </div>
         </div>
-      </main>
 
       {selectedPipelineJob && (
         <PipelineRunner

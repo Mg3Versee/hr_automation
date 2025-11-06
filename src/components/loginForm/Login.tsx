@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 import { useRouter } from "next/navigation";
 import { loginAPI } from "@/services/redux/thunk/authThunk";
-import { useAuth } from "@/services/context/AppContext";
+import { useAuth } from "@/services/context/AuthContext";
 
 export default function LoginPage() {
   const router = useRouter();
