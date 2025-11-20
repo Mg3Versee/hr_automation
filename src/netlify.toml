@@ -1,0 +1,3 @@
+[build.environment]
+HR_AUTOMATION45="my-secret-code-45"
+NGROK_BASE_URL="https://44ebe727afcb.ngrok-free.app"
